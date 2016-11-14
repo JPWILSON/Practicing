@@ -18,7 +18,30 @@ import webapp2
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        self.response.write('''<!DOCTYPE html>
+<html>
+<head>
+	<meta charset = "utf-8">
+	<meta name = "viewport" content="width=device-width, initial-scale = 1.0">
+	<title>Thingy</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<script type="text/javascript"></script>
+
+</head>
+<body>
+	<div class = "container">
+		<div class="big">
+			<h1>Big viewport Hellooooo Udacity!!!</h1>
+		</div>
+		<div class="medium">
+			<h1>Medium viewport</h1>
+		</div>
+		<div class="small">
+			<h1>Small viewport</h1>
+		</div>
+	</div>
+</body>
+</html>''')
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)

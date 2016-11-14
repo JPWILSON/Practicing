@@ -16,38 +16,27 @@
 #
 import webapp2
 
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('''
+form = """
+<form action="/testform">
+			<input name="q">
+			<input type = "submit">
+		</form>
+"""
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset = "utf-8">
-	<meta name = "viewport" content="width=device-width, initial-scale = 1.0">
-	<title>Thingy</title>
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	<script type="text/javascript"></script>
+class MainPage(webapp2.RequestHandler):
+	def get(self):
+		self.response.headers['Content-type'] = 'text/html' #the default is text/html i think? change from text/plain
+		self.response.out.write(form)
 
-</head>
-<body>
-	<div class = "container">
-		<div class="big">
-			<h1>Big viewport Hellooooo Udacity!!!</h1>
-		</div>
-		<div class="medium">
-			<h1>Medium viewport</h1>
-		</div>
-		<div class="small">
-			<h3>Still working? Double checking again now..</h3>
-		</div>
-	</div>
-</body>
-</html>
+class TestHandler(webapp2.RequestHandler):
+	def get(self):
+		q = self.request.get("q")
+		self.response.out.write(q)
+		
+		#The following is how to view the http request:
+		#self.response.headers['Content-type'] = 'text/plain'
+		#self.response.out.write(self.request)
 
-
-''')
-
-app = webapp2.WSGIApplication([
-    ('/', MainHandler)
-], debug=True)
+#This is the url mapping section, and it maps to Mainpage
+app = webapp2.WSGIApplication([('/', MainPage),
+								('/testform', TestHandler)], debug = True)

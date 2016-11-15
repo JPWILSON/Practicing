@@ -17,27 +17,32 @@
 import webapp2
 
 form = """
-<form method = "post" action="/testform">
-			<input name="q">
+<form method = "post">
+			<h2>What is your birthday</h2>
+			<label>
+				Day: 
+				<input name="day">
+			</label>
+			<label>
+				Month: 
+				<input name ="month">
+			</label>
+			<label>
+				Year: 
+				<input name ="year">
+			</label>
 			<input type = "submit">
 		</form>
 """
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):
-		self.response.headers['Content-type'] = 'text/html' #the default is text/html i think? change from text/plain
 		self.response.out.write(form)
 
-class TestHandler(webapp2.RequestHandler):
 	def post(self):
-		#q = self.request.get("q")
-		#self.response.out.write(q)
-
-		#The following is how to view the http request:
-		self.response.headers['Content-type'] = 'text/plain'
-		self.response.out.write(self.request)
+		self.response.out.write("Thanks for submitting my boet!")
+		self.response.out.write(form)
 
 #This is the url mapping section, and it maps to Mainpage
-app = webapp2.WSGIApplication([('/', MainPage),
-								('/testform', TestHandler)], debug = True)
+app = webapp2.WSGIApplication([('/', MainPage)], debug = True)
 

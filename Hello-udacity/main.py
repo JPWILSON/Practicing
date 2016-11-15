@@ -40,3 +40,4 @@ class TestHandler(webapp2.RequestHandler):
 #This is the url mapping section, and it maps to Mainpage
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/testform', TestHandler)], debug = True)
+

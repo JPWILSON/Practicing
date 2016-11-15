@@ -41,9 +41,9 @@ class MainPage(webapp2.RequestHandler):
 	#Since w're going to be printing the form in a couple of places, generalize into a fn:
 	def write_form(self, error="", day = "", month="", year= ""):
 		self.response.out.write(form % {"error": error,
-										"day": day,
-										"month": month,
-										"year": year})
+										"day": escape_html(day),
+										"month": escape_html(month),
+										"year": escape_html(year)})
 
 	def get(self):
 		#Now, because of above fn, can just use it here:
@@ -63,9 +63,15 @@ class MainPage(webapp2.RequestHandler):
 			self.write_form("Sorry bud, something you entered wasn't valid...", 
 				user_day, user_month, user_year)
 		else:
-			self.response.out.write("Thanks for submitting a valid date my boet!")
-		
+			self.redirect("/thanks")
+			
+
+class ThanksHandler(webapp2.RequestHandler):
+	def get(self):
+		self.response.out.write("Thanks for submitting a valid date my boet!")
+
 
 #This is the url mapping section, and it maps to Mainpage
-app = webapp2.WSGIApplication([('/', MainPage)], debug = True)
+app = webapp2.WSGIApplication([('/', MainPage),
+								('/thanks', ThanksHandler)], debug = True)
 

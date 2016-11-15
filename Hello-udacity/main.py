@@ -17,7 +17,7 @@
 import webapp2
 
 form = """
-<form action="/testform">
+<form method = "post" action="/testform">
 			<input name="q">
 			<input type = "submit">
 		</form>
@@ -29,13 +29,13 @@ class MainPage(webapp2.RequestHandler):
 		self.response.out.write(form)
 
 class TestHandler(webapp2.RequestHandler):
-	def get(self):
-		q = self.request.get("q")
-		self.response.out.write(q)
-		
+	def post(self):
+		#q = self.request.get("q")
+		#self.response.out.write(q)
+
 		#The following is how to view the http request:
-		#self.response.headers['Content-type'] = 'text/plain'
-		#self.response.out.write(self.request)
+		self.response.headers['Content-type'] = 'text/plain'
+		self.response.out.write(self.request)
 
 #This is the url mapping section, and it maps to Mainpage
 app = webapp2.WSGIApplication([('/', MainPage),

@@ -14,6 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+
+'''
+THese are the problems for the week db section of intro to backend
+
+
 import os
 
 import webapp2
@@ -42,5 +48,4 @@ class MainPage(Handler):
 
 app = webapp2.WSGIApplication([('/', MainPage)], debug = True)
 
-
-
+'''

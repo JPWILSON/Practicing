@@ -4,13 +4,29 @@
 	<meta charset = "utf-8">
 	<meta name = "viewport" content="width=device-width, initial-scale = 1.0">
 	<title>Backend Practice</title>
-	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="static/styles.css">
 	<script type="text/javascript"></script>
 
 </head>
 <body>
 	<div class = "container">
-		<h2>Hey man, does this work?</h2>
+		<h2>Blog Form </h2>
+		<form method = "post">
+			<label>
+				<h3>Title</h3>
+				<input name = "title" value="{{title}}">
+			</label>
+			<label>
+				<h3 >Art</h3>
+				<textarea name= "art">{{art}}</textarea>
+			</label>
+			<br>
+			<div class = "error">{{error}}</div>
+			<label>
+				<input type = "submit" value= "Enter!">
+			</label>
+		</form>
+		<hr>
 	</div>
 </body>
 </html>

@@ -14,39 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import os 
-import webapp2
-import jinja2
-
-template_dir = os.path.join(os.path.dirname(__file__), 'templates')
-jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir))
-
-class Handler(webapp2.RequestHandler):
-	def write(self, *a, **kw):
-		self.response.out.write(*a, **kw)
-
-	def render_str(self, template, **params):
-		t = jinja_env.get_template(template)
-		return t.render(params)
-
-	def render(self, template, **kw):
-		self.write(render_str(template, **kw))
-
-class MainPage(Handler):
-	def get(self):
-		self.write("JP can now do it")
-
-app = webapp2.WSGIApplication([('/', MainPage)], debug = True)
-'''
-
 import os
-
 import webapp2
 import jinja2
 
-template_dir = os.path.join(os.path.dirname(__file__), 'templates')
-jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir))
+from google.appengine.ext import db 
 
+template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
 class Handler(webapp2.RequestHandler):
 	def write(self, *a, **kw):
@@ -54,17 +29,28 @@ class Handler(webapp2.RequestHandler):
 
 	def render_str(self, template, **params):
 		t = jinja_env.get_template(template)
-		return t.render(params)
+		return t.render(**params)
 
 	def render(self, template, **kw):
 		self.write(self.render_str(template, **kw))
 
 class MainPage(Handler):
+	def render_front(self, title="", art="", error=""):
+		self.render("misc.html", title = title, art = art, error = error)
+
 	def get(self):
-		n = self.request.get("n")
-		n = n and int(n)
-		self.render("misc.html", n=n)
+		self.render_front()
+
+	def post(self):
+		title = self.request.get("title")
+		art = self.request.get("art")
+
+		if title and art:
+			self.write("Thanks")
+		else:
+			error = "Submission incomplete"
+			self.render_front(title, art, error)
+
 
 app = webapp2.WSGIApplication([('/', MainPage)], debug = True)
 
-'''
